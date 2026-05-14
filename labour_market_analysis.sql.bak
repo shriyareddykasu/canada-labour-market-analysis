@@ -1,0 +1,10 @@
+-- Query 1: Pre-COVID Baseline — Average Employment by Province in 2019
+-- Establishes the employment benchmark before the pandemic shock
+SELECT 
+    province,
+    ROUND(AVG(value), 1) AS avg_employment_2019_thousands
+FROM labour_force
+WHERE metric = 'Employment'
+    AND LEFT(ref_date, 4) = '2019'
+GROUP BY province
+ORDER BY avg_employment_2019_thousands DESC;
