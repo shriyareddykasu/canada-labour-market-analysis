@@ -24,3 +24,108 @@ FROM labour_force
 WHERE metric = 'Employment'
 GROUP BY province
 ORDER BY pct_change ASC;
+
+-- Query 3: Recovery Tracker — Did Provinces Return to Pre-COVID Employment Levels?
+-- Compares each province's average employment in 2021 and 2022 against their 2019 baseline
+SELECT 
+    province,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2019' THEN value END), 1) AS avg_2019,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2021' THEN value END), 1) AS avg_2021,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2022' THEN value END), 1) AS avg_2022,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2022' THEN value END) - 
+          AVG(CASE WHEN LEFT(ref_date, 4) = '2019' THEN value END), 1) AS gap_vs_2019
+FROM labour_force
+WHERE metric = 'Employment'
+GROUP BY province
+ORDER BY gap_vs_2019 DESC;
+
+-- Query 4: Job Quality — Full-Time vs Part-Time Employment Ratio by Year
+-- Did quality jobs recover after COVID or did part-time work replace them?
+SELECT 
+    LEFT(ref_date, 4) AS year,
+    ROUND(AVG(CASE WHEN metric = 'Full-time employment' THEN value END), 1) AS avg_fulltime,
+    ROUND(AVG(CASE WHEN metric = 'Part-time employment' THEN value END), 1) AS avg_parttime,
+    ROUND(AVG(CASE WHEN metric = 'Full-time employment' THEN value END) /
+          AVG(CASE WHEN metric = 'Part-time employment' THEN value END), 2) AS fulltime_parttime_ratio
+FROM labour_force
+GROUP BY LEFT(ref_date, 4)
+ORDER BY year;
+
+-- Query 5: Participation Rate Trend — Are Canadians Giving Up Looking for Work?
+-- Tracks the national average participation rate year by year
+SELECT 
+    LEFT(ref_date, 4) AS year,
+    ROUND(AVG(CASE WHEN metric = 'Participation rate' THEN value END), 2) AS avg_participation_rate
+FROM labour_force
+GROUP BY LEFT(ref_date, 4)
+ORDER BY year;
+
+-- Query 6: Peak Unemployment — Worst Month Ever Recorded by Province
+-- Uses RANK window function to identify the single worst unemployment month per province
+SELECT province, ref_date, unemployment_rate
+FROM (
+    SELECT 
+        province,
+        ref_date,
+        ROUND(value, 2) AS unemployment_rate,
+        RANK() OVER (PARTITION BY province ORDER BY value DESC) AS rnk
+    FROM labour_force
+    WHERE metric = 'Unemployment rate'
+) ranked
+WHERE rnk = 1
+ORDER BY unemployment_rate DESC;
+
+-- Query 7: Pre vs Post Pandemic Comparison — All Metrics by Province
+-- Compares average values across all 6 metrics: pre-pandemic (2019) vs post-pandemic (2023-2024)
+SELECT 
+    province,
+    metric,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2019' THEN value END), 2) AS avg_2019,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) IN ('2023','2024') THEN value END), 2) AS avg_2023_2024,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) IN ('2023','2024') THEN value END) -
+          AVG(CASE WHEN LEFT(ref_date, 4) = '2019' THEN value END), 2) AS metric_change
+FROM labour_force
+GROUP BY province, metric
+ORDER BY province, metric;
+
+-- Query 8: Current State — Unemployment Rate by Province in 2026 Ranked Worst to Best
+-- Shows which provinces are still struggling as of the most recent data (Jan–Apr 2026)
+SELECT 
+    province,
+    ROUND(AVG(value), 2) AS avg_unemployment_2026,
+    RANK() OVER (ORDER BY AVG(value) DESC) AS rank_worst_to_best
+FROM labour_force
+WHERE metric = 'Unemployment rate'
+    AND LEFT(ref_date, 4) = '2026'
+GROUP BY province
+ORDER BY avg_unemployment_2026 DESC;
+
+-- Query 9: 2025 Trade Shock — Employment Change from 2024 to 2025 by Province
+-- Identifies which provinces absorbed the most damage from the 2025 trade pressures
+SELECT 
+    province,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2024' THEN value END), 1) AS avg_2024,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2025' THEN value END), 1) AS avg_2025,
+    ROUND(AVG(CASE WHEN LEFT(ref_date, 4) = '2025' THEN value END) -
+          AVG(CASE WHEN LEFT(ref_date, 4) = '2024' THEN value END), 1) AS employment_change,
+    ROUND(((AVG(CASE WHEN LEFT(ref_date, 4) = '2025' THEN value END) -
+            AVG(CASE WHEN LEFT(ref_date, 4) = '2024' THEN value END)) /
+            AVG(CASE WHEN LEFT(ref_date, 4) = '2024' THEN value END)) * 100, 2) AS pct_change
+FROM labour_force
+WHERE metric = 'Employment'
+GROUP BY province
+ORDER BY pct_change ASC;
+
+-- Query 10: 3-Month Rolling Average Unemployment Rate — National Trend (2019–2026)
+-- Smooths monthly volatility to reveal the true national unemployment trajectory
+SELECT 
+    ref_date,
+    ROUND(AVG(value), 2) AS monthly_avg,
+    ROUND(AVG(AVG(value)) OVER (
+        ORDER BY ref_date 
+        ROWS BETWEEN 2 PRECEDING AND CURRENT ROW
+    ), 2) AS rolling_3month_avg
+FROM labour_force
+WHERE metric = 'Unemployment rate'
+GROUP BY ref_date
+ORDER BY ref_date;
