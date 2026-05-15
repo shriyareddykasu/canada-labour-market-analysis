@@ -38,6 +38,10 @@ Canada's full-time to part-time employment ratio stood at 4.26 in 2019. During C
 ### 5. Canada's Participation Rate Never Recovered to Pre-Pandemic Levels
 Canada's average labour force participation rate stood at 65.33% in 2019. The COVID-19 shock drove it down to 63.64% in 2020 as hundreds of thousands of Canadians exited the workforce entirely. While employment headcounts recovered strongly by 2022, the participation rate never returned to its pre-pandemic baseline — averaging 64.30% across January to April 2026, a full percentage point below 2019 levels. This persistent gap indicates that a meaningful share of working-age Canadians who left the labour force during the pandemic have not returned, masking the true scale of labour market weakness behind otherwise improving employment numbers.
 
+### 6. Every Province Hit Peak Unemployment in April or May 2020 — The Sharpest Labour Market Shock on Record
+Every Canadian province recorded its single highest unemployment rate during the immediate COVID-19 lockdown period of April to May 2020, confirming this as the most severe and synchronised labour market shock in the dataset. Quebec peaked highest at 18.20% in April 2020, followed by Newfoundland and Labrador at 17.80% and Alberta at 15.40% in May 2020. Ontario and British Columbia peaked at 14.20% and 14.00% respectively. Manitoba recorded the lowest peak unemployment nationally at 11.90%, reflecting its more diversified and domestically oriented economy. The uniformity of timing across all 10 provinces underscores that the COVID shock was not regional — it was a simultaneous national collapse with no province spared.
+
+
 
 ## Files
 | File | Description |
