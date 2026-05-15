@@ -61,5 +61,5 @@ The 3-month rolling average unemployment rate reveals the full arc of Canada's l
 | `cleaning_labour_data.ipynb` | Python data cleaning notebook |
 | `labour_market_analysis.sql` | SQL queries with comments |
 
-## Status
-🔄 In Progress — SQL analysis (1 of 10 queries complete)
+✅ Complete — SQL analysis (10 of 10 queries complete)
+🔄 In Progress — Power BI dashboard
