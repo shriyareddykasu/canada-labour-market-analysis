@@ -53,13 +53,40 @@ Employment trends in 2025 reveal a diverging Canada. Newfoundland and Labrador w
 ### 10. Canada's Unemployment Never Fully Recovered — A New Elevated Baseline Emerging in 2025–2026
 The 3-month rolling average unemployment rate reveals the full arc of Canada's labour market over seven years. The pre-pandemic baseline held steady near 7.0% through 2019 before the COVID shock drove the rolling average to a peak of 13.53% in June 2020. A sustained recovery followed, bringing the rolling average to a post-pandemic low of 5.84% by early 2023 — the strongest labour market reading in the dataset. However, unemployment began rising again through 2024, reaching 7.05% by December 2024, before stabilising between 6.73% and 6.82% in the first four months of 2026. Canada has not returned to its pre-pandemic unemployment baseline, and the upward drift since 2023 signals that structural labour market pressures — population growth, housing costs, and trade uncertainty — are outpacing job creation.
 
+## Business Recommendation
+Banks and financial institutions operating in Canada should prioritise regional risk stratification in their lending and workforce strategies. Newfoundland and Labrador's persistently high unemployment rate of 9.48% in 2026 — nearly double Saskatchewan's 5.38% — signals elevated credit risk in Atlantic Canada that should be reflected in consumer lending models. Ontario's third-place ranking in unemployment despite being Canada's largest economy warrants close monitoring for mortgage default risk in the GTA. The post-pandemic decline in participation rates across nine of ten provinces indicates a structural labour supply gap that will constrain economic growth regardless of job creation efforts. Financial institutions should also note the widening east-west divide visible in 2025 employment data — western provinces accelerating while Atlantic Canada stagnates — suggesting differentiated regional strategies for branch investment, credit products, and financial wellness offerings are now essential rather than optional.
 
+## Dashboard
+🔗 [View Live Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZmY4ZTUyZTktMWQxYS00NDQyLThmMTUtYTMzMWQxNzVlZjRmIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9)
+
+**Dashboard Pages:**
+- **Page 1 — National Overview:** KPI cards showing 2026 unemployment, employment, participation, and FT/PT ratio with national unemployment trend (2019–2026)
+- **Page 2 — Provincial Deep Dive (2026):** Interactive map and bar chart with metric slicer for provincial comparisons
+- **Page 3 — Job Quality Analysis:** Full-time vs part-time employment trend and year-by-year comparison (2019–2026)
+- **Page 4 — 2025 Trade Shock:** Employment change by province 2024 vs 2025 with Newfoundland highlighted as the only province to lose jobs
+
+## Dashboard Preview
+
+**Page 1 — National Overview**
+![National Overview](page1_national_overview.png)
+
+**Page 2 — Provincial Deep Dive**
+![Provincial Deep Dive](page2_provincial_deep_dive.png)
+
+**Page 3 — Job Quality Analysis**
+![Job Quality Analysis](page3_job_quality_analysis.png)
+
+**Page 4 — 2025 Trade Shock**
+![2025 Trade Shock](page4_trade_shock.png)
+  
 ## Files
 | File | Description |
 |---|---|
 | `labour_force_clean.csv` | Cleaned dataset (5,280 rows) |
 | `cleaning_labour_data.ipynb` | Python data cleaning notebook |
 | `labour_market_analysis.sql` | SQL queries with comments |
+| `canada_labour_market_dashboard.pbix` | Power BI dashboard file |
 
+## Status
 ✅ Complete — SQL analysis (10 of 10 queries complete)
-🔄 In Progress — Power BI dashboard
+✅ Complete — Power BI dashboard (4 pages, live)
